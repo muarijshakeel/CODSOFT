@@ -1,0 +1,52 @@
+# Function to add a task
+def add_task(task):
+    with open("tasks.txt", "a") as file:
+        file.write(task + "\n")
+
+# Function to list tasks
+def list_tasks():
+    with open("tasks.txt", "r") as file:
+        tasks = file.readlines()
+        if tasks:
+            print("To-Do List:")
+            for i, task in enumerate(tasks, 1):
+                print(f"{i}. {task.strip()}")
+        else:
+            print("No tasks in the list.")
+
+# Function to remove a task
+def remove_task(task_index):
+    tasks = []
+    with open("tasks.txt", "r") as file:
+        tasks = file.readlines()
+
+    if 0 <= task_index < len(tasks):
+        removed_task = tasks.pop(task_index)
+        with open("tasks.txt", "w") as file:
+            file.writelines(tasks)
+        print(f"Removed task: {removed_task.strip()}")
+    else:
+        print("Invalid task number.")
+
+# Main program loop
+while True:
+    print("\n1. Add Task")
+    print("2. List Tasks")
+    print("3. Remove Task")
+    print("4. Exit")
+    
+    choice = input("Enter your choice: ")
+    
+    if choice == "1":
+        task = input("Enter the task: ")
+        add_task(task + "\n")
+    elif choice == "2":
+        list_tasks()
+    elif choice == "3":
+        list_tasks()
+        task_index = int(input("Enter the task number to remove: ")) - 1
+        remove_task(task_index)
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice. Please try again.")
